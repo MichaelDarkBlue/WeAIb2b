@@ -347,14 +347,13 @@
         #demo h2 {
              color: var(--color-text-light);
         }
-         #demo p {
+        #demo p {
              color: var(--color-blue-light);
              max-width: 600px;
              margin: 0 auto 30px auto;
-         }
+        }
 
-
-        /* --- Modal Styles --- */
+        /* --- Modal Styles (MP3 Demo) --- */
         .modal {
             display: none; /* Hidden by default */
             position: fixed;
@@ -371,15 +370,17 @@
 
         .modal-content {
             position: relative;
-            background-color: #fefefe;
+            background-color: var(--color-bg-light);
             margin: auto;
-            padding: 0; /* Padding removed to let video fill */
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 800px; /* Max width for the video */
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            width: 90%; /* Adjust width */
+            max-width: 500px; /* Max width for the audio control */
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
             animation-name: animatetop;
-            animation-duration: 0.4s
+            animation-duration: 0.4s;
+            text-align: center; /* Center audio control */
         }
 
         @keyframes animatetop {
@@ -411,21 +412,17 @@
             text-decoration: none;
         }
 
-        .modal-video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
+        .modal-audio-container h3 {
+            margin-bottom: 20px;
+            color: var(--color-blue-deep);
         }
 
-        .modal-video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+        .modal-audio-container audio {
+            width: 100%; /* Make audio player responsive */
+            max-width: 400px; /* Max width for player */
+            margin-top: 10px;
         }
+
 
         /* --- Testimonials Section --- */
         #testimonials .testimonial-grid {
@@ -719,6 +716,7 @@
 
              .modal-content {
                  width: 90%;
+                 max-width: 400px; /* Smaller max width for modal */
              }
              .close-btn {
                  top: 5px;
@@ -865,9 +863,9 @@
         <!-- Demo Section -->
         <section id="demo">
             <div class="container">
-                <h2>See Our Virtual Assistant in Action</h2>
-                <p>Watch a quick demo to see how our AI handles real customer interactions, manages scheduling, and provides instant support.</p>
-                <button id="openModalBtn" class="btn btn-primary">See It in Action</button>
+                <h2>Hear Our Virtual Assistant in Action</h2>
+                <p>Listen to a quick demo to hear how our AI handles real customer interactions and provides instant support.</p>
+                <button id="openModalBtn" class="btn btn-primary">Listen to Demo</button>
             </div>
         </section>
 
@@ -1021,16 +1019,21 @@
         </div>
     </footer>
 
-    <!-- Demo Video Modal Structure -->
+    <!-- MP3 Demo Modal Structure -->
     <div id="demoModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" id="closeModalBtn">×</span>
-            <div class="modal-video-container">
-                <!-- Replace with your actual YouTube/Vimeo embed code -->
-                <iframe id="demoVideo" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <div class="modal-audio-container">
+                <h3>Listen to the AI Receptionist Demo</h3>
+                <audio controls id="demoAudio">
+                    <!-- Replace 'path/to/your/tammy.mp3' with the actual path to your MP3 file -->
+                    <source src="/tammy.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
             </div>
         </div>
     </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1063,39 +1066,47 @@
             });
 
 
-            // --- Demo Modal ---
+            // --- Demo Modal (MP3) ---
             const modal = document.getElementById('demoModal');
             const openModalBtn = document.getElementById('openModalBtn');
             const closeModalBtn = document.getElementById('closeModalBtn');
-            const demoVideo = document.getElementById('demoVideo');
-            // !!! IMPORTANT: Replace this with your actual video embed URL !!!
-            // Using a standard placeholder video URL for now. Replace 'VIDEO_ID_HERE'
-            const videoSrc = "https://www.youtube.com/embed/VIDEO_ID_HERE?autoplay=1";
-            // const videoSrc = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"; // If you want Rick Astley ;)
+            const demoAudio = document.getElementById('demoAudio');
 
             openModalBtn.addEventListener('click', function() {
-                // Replace VIDEO_ID_HERE in the src if not already done
-                let finalVideoSrc = videoSrc;
-                if (videoSrc.includes("VIDEO_ID_HERE")) {
-                    console.warn("Please replace 'VIDEO_ID_HERE' in the videoSrc variable with your actual YouTube video ID.");
-                    // Optionally provide a default or prevent opening
-                    // finalVideoSrc = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"; // Default to placeholder
-                }
-                demoVideo.src = finalVideoSrc; // Set src only when opening
                 modal.style.display = "flex"; // Use flex to enable centering
+                // Optional: Auto-play the audio
+                if (demoAudio) {
+                   // Check if play permission is needed or handle promise
+                   const playPromise = demoAudio.play();
+                   if (playPromise !== undefined) {
+                       playPromise.then(_ => {
+                           // Autoplay started successfully
+                       }).catch(error => {
+                           console.error("Autoplay prevented:", error);
+                           // Autoplay failed, maybe due to user gesture requirement.
+                           // User can still manually click play.
+                       });
+                   }
+                } else {
+                    console.error("Audio element not found!");
+                }
             });
 
-            function closeVideoModal() {
+            function closeAudioModal() {
                  modal.style.display = "none";
-                 demoVideo.src = ""; // Stop video by removing src
+                 // Pause the audio when closing the modal
+                 if (demoAudio) {
+                     demoAudio.pause();
+                     demoAudio.currentTime = 0; // Reset to start
+                 }
             }
 
-            closeModalBtn.addEventListener('click', closeVideoModal);
+            closeModalBtn.addEventListener('click', closeAudioModal);
 
             // Close modal if user clicks outside the modal content
             window.addEventListener('click', function(event) {
                 if (event.target == modal) {
-                    closeVideoModal();
+                    closeAudioModal();
                 }
             });
 
