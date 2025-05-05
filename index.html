@@ -470,17 +470,15 @@
          }
 
         /* --- Pricing Section --- */
-        #pricing .pricing-table {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+        #pricing .single-pricing-plan-container {
+            display: flex;
+            justify-content: center; /* Center the single plan */
             margin-top: 40px;
-            align-items: stretch; /* Make cards same height */
         }
 
         .pricing-plan {
             background-color: var(--color-bg-light);
-            padding: 30px;
+            padding: 40px; /* Increased padding for single plan */
             border: 1px solid var(--color-border);
             border-radius: 8px;
             text-align: center;
@@ -488,22 +486,15 @@
             flex-direction: column;
             justify-content: space-between; /* Push button to bottom */
             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            max-width: 450px; /* Set a max-width for the single plan */
+            width: 100%; /* Ensure it takes up available space up to max-width */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Add a subtle shadow */
         }
 
         .pricing-plan:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
         }
-
-        .pricing-plan.highlight {
-            border-color: var(--color-green-vibrant);
-            transform: scale(1.05);
-             box-shadow: 0 8px 25px rgba(50, 205, 50, 0.2);
-        }
-         .pricing-plan.highlight:hover {
-              transform: scale(1.07) translateY(-5px);
-         }
-
 
         .pricing-plan h3 {
             color: var(--color-blue-deep);
@@ -527,7 +518,6 @@
             margin-bottom: 30px;
             padding: 0;
             text-align: left;
-            flex-grow: 1; /* Allow list to grow */
         }
 
         .pricing-plan ul li {
@@ -544,14 +534,7 @@
         }
 
         .pricing-plan .btn {
-            margin-top: auto; /* Push button down */
-        }
-
-        #pricing .comparison-note {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: #555;
+            margin-top: 30px; /* Ensure consistent spacing above button */
         }
 
         /* --- Contact Section --- */
@@ -670,10 +653,6 @@
         @media (max-width: 992px) {
             h1 { font-size: 2.4rem; }
             h2 { font-size: 2rem; }
-
-            .pricing-plan.highlight {
-                transform: scale(1); /* Disable scaling highlight on smaller screens if needed */
-            }
         }
 
         @media (max-width: 768px) {
@@ -738,8 +717,6 @@
 
             .features-grid { grid-template-columns: 1fr; } /* Stack features */
             .testimonial-grid { grid-template-columns: 1fr; } /* Stack testimonials */
-            .pricing-table { grid-template-columns: 1fr; } /* Stack pricing */
-
             .footer-links li { display: block; margin: 5px 0; } /* Stack footer links */
 
         }
@@ -897,56 +874,26 @@
         <section id="pricing">
             <div class="container">
                  <div class="section-heading">
-                    <h2>Affordable Plans for Every Business</h2>
-                    <p>Choose the right plan for your needs. Significantly more cost-effective than a traditional receptionist.</p>
+                    <h2>Simple, Affordable Pricing</h2>
+                    <p>Get started with our AI receptionist for one low monthly price.</p>
                  </div>
-                <div class="pricing-table">
-                    <div class="pricing-plan">
+                <div class="single-pricing-plan-container"> <!-- New container for centering -->
+                    <div class="pricing-plan single"> <!-- Added 'single' class for potential specific styling -->
                         <div>
-                            <h3>Starter</h3>
-                            <div class="price">$49<span>/mo</span></div>
+                            <h3>AI Receptionist</h3>
+                            <div class="price">As low as $20<span>/mo</span></div>
                             <ul>
-                                <li>Up to 100 Calls/Month</li>
+                                <li>Handles ~100 Calls/Month</li>
+                                <li>24/7 Call Answering</li>
                                 <li>Basic Call Routing</li>
                                 <li>Standard Q&A Responses</li>
-                                <li>Business Hours Support</li>
+                                <li>Appointment Scheduling</li>
                                 <li>Email Summaries</li>
                             </ul>
                         </div>
-                        <a href="#contact" class="btn btn-secondary">Choose Plan</a>
-                    </div>
-                    <div class="pricing-plan highlight">
-                         <div>
-                             <h3>Pro</h3>
-                             <div class="price">$99<span>/mo</span></div>
-                             <ul>
-                                <li>Up to 500 Calls/Month</li>
-                                <li>Advanced Call Routing</li>
-                                <li><strong>24/7 Call Handling</strong></li>
-                                <li>Appointment Scheduling Integration</li>
-                                <li>CRM Integration (Basic)</li>
-                                <li>Priority Email Support</li>
-                             </ul>
-                         </div>
-                        <a href="#contact" class="btn btn-primary">Start Free Trial</a>
-                    </div>
-                    <div class="pricing-plan">
-                        <div>
-                            <h3>Business</h3>
-                            <div class="price">Custom<span>/mo</span></div>
-                            <ul>
-                                <li>Unlimited Calls Option</li>
-                                <li>Complex Workflow Automation</li>
-                                <li>Multilingual Support</li>
-                                <li>Advanced CRM/API Integrations</li>
-                                <li>Custom AI Training</li>
-                                <li>Dedicated Account Manager</li>
-                            </ul>
-                        </div>
-                        <a href="#contact" class="btn btn-secondary">Contact Sales</a>
+                        <a href="#contact" class="btn btn-primary">Get Started Now</a>
                     </div>
                 </div>
-                 <p class="comparison-note">All plans offer significant savings compared to the average salary of a full-time human receptionist.</p>
             </div>
         </section>
 
@@ -956,6 +903,7 @@
                  <div class="section-heading">
                     <h2>Get in Touch</h2>
                     <p>Have questions or ready to start? Contact our team today for support with your <strong>AI phone receptionist</strong> setup.</p>
+                    <h1>1(941)390-4547</h2>
                  </div>
                 <!-- JotForm Embed - Keep this as the primary contact method -->
                 <script type="text/javascript" src="https://form.jotform.com/jsform/250868073250154"></script>
