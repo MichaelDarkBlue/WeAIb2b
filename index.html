@@ -1072,36 +1072,41 @@
             const closeModalBtn = document.getElementById('closeModalBtn');
             const demoAudio = document.getElementById('demoAudio');
 
-            openModalBtn.addEventListener('click', function() {
-                modal.style.display = "flex"; // Use flex to enable centering
-                // Optional: Auto-play the audio
-                if (demoAudio) {
-                   // Check if play permission is needed or handle promise
-                   const playPromise = demoAudio.play();
-                   if (playPromise !== undefined) {
-                       playPromise.then(_ => {
-                           // Autoplay started successfully
-                       }).catch(error => {
-                           console.error("Autoplay prevented:", error);
-                           // Autoplay failed, maybe due to user gesture requirement.
-                           // User can still manually click play.
-                       });
-                   }
+            // Function to open the modal
+            function openAudioModal() {
+                if (modal && demoAudio) {
+                    modal.style.display = "flex"; // Use flex to enable centering
+                    // NOTE: Autoplay is often blocked by browsers.
+                    // User will likely need to press play on the controls.
+                    // Ensure the path '/tammy.mp3' in the HTML <source> tag is correct.
                 } else {
-                    console.error("Audio element not found!");
+                    console.error("Modal or Audio element not found!");
                 }
-            });
+            }
 
+            // Function to close the modal
             function closeAudioModal() {
-                 modal.style.display = "none";
-                 // Pause the audio when closing the modal
-                 if (demoAudio) {
+                 if (modal && demoAudio) {
+                     modal.style.display = "none";
+                     // Pause the audio and reset time when closing
                      demoAudio.pause();
-                     demoAudio.currentTime = 0; // Reset to start
+                     demoAudio.currentTime = 0;
                  }
             }
 
-            closeModalBtn.addEventListener('click', closeAudioModal);
+            // Event listeners
+            if (openModalBtn) {
+                openModalBtn.addEventListener('click', openAudioModal);
+            } else {
+                 console.error("Open Modal Button not found!");
+            }
+
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeAudioModal);
+            } else {
+                 console.error("Close Modal Button not found!");
+            }
+
 
             // Close modal if user clicks outside the modal content
             window.addEventListener('click', function(event) {
