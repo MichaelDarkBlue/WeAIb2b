@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subscribe to Phone Messages</title>
+    <style>
+      /* Simple styling for clarity */
+      body {
+        font-family: Arial, sans-serif;
+        background: #f9f9f9;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+      .container h2 {
+        font-size: 24px;
+      }
+      .container p {
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+      .container input[type="text"] {
+        width: 80%;
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+      }
+      .container input[type="checkbox"] {
+        margin-right: 5px;
+      }
+      .container button {
+        width: 80%;
+        padding: 10px;
+        margin-top: 15px;
+        font-size: 16px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      .container button:hover {
+        background-color: #218838;
+      }
+      .thankyou-message {
+        margin-top: 30px;
+        font-size: 20px;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="form-container">
+        <h1>AI Bradenton.com</h1>
+      <h2>Subscribe to Phone Messages</h2>
+      <span>Phone Message will come from:</span><h3> (941) 390-4547</h3>
+      <p>Please enter your phone number and check the box to agree to receive SMS and MMS messages.</p>
+      <form id="optInForm" onsubmit="handleSubmission(event)">
+        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Your phone number" required />
+        <br /><br />
+        <label>
+          <input type="checkbox" id="consent" name="consent" required /> I agree to receive SMS and MMS messages.
+        </label>
+        <br /><br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+<script>
+  // This function handles the form submission event.
+  // It prevents the regular submission so that we can display the "Thank you" message.
+  function handleSubmission(event) {
+    event.preventDefault();
+    // NOTE: Here you could add an AJAX request to send the data to your server.
+    // For this example, we simply replace the form with a thank you message.
+    document.getElementById("form-container").innerHTML =
+      '<div class="thankyou-message">Thank you for your submission!</div>';
+  }
+</script>
+  </body>
+</html>
